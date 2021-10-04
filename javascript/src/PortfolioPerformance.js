@@ -14,28 +14,38 @@ const transactions = [
     { effectiveDate: new Date(2021, 8, 5, 9, 0, 0), value: -0.01 },
     { effectiveDate: new Date(2021, 8, 7, 9, 0, 0), value: 0.1 },
 ];
-
-
+// change date format so easier for comparison 
+const changeDate = (array)=>{
+    for(let i = 0; i < array.length; i++){
+        array[i].effectiveDate = array[i].effectiveDate.toISOString().substring(0,10)
+    }}
 
 function getDailyPortfolioValues() {
 
+    changeDate(transactions)
+    changeDate(prices)
 
-    // get dates from Prices
-    const arrayOfDates = prices.map((priceLog) => {
-        return priceLog.effectiveDate
-    })
+    const valueForDay = (date) => {
 
-    // change date format and create objects for each date
-    const newObjectArray = arrayOfDates.map((date) => {
-        let newDate = date.toISOString().substring(0,10)
-        return {effectiveDate : `${newDate}`,
-                value: 1}
-    })
+        // gets all values from transaction for a specific day
+         const valueList = transactions.map((logs)=> {
+            if( logs.effectiveDate === date){ return logs.value}
+            else{return 0}
+         })
+         console.log(valueList)
+         
+         const totalForDay = valueList.reduce((prevValue, nextValue) => {
+             prevValue + nextValue;
+         },0)
 
+         console.log(`totalForDay : ${totalForDay}`)
 
+         return totalForDay
+    }
 
-    
-    return [newObjectArray]
+    valueForDay(transactions[0].effectiveDate)
+
+    return []
 
 }
 
