@@ -37,7 +37,7 @@ function getDailyPortfolioValues() {
             index += 1
         }
         
-       console.log(index)
+       console.log(transactions[index].effectiveDate)
 
         return {effectiveDate: date.toString, value: valueCalculated}
     })
