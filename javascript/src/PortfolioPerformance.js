@@ -15,6 +15,34 @@ const transactions = [
     { effectiveDate: new Date(2021, 8, 7, 9, 0, 0), value: 0.1 },
 ];
 
-export function getDailyPortfolioValues() {
-    return [];
+
+
+function getDailyPortfolioValues() {
+
+    const arrayOfDates = prices.map((logOfPricesInfo) => {
+        return logOfPricesInfo.effectiveDate
+    })
+
+    let index = 0
+    let valueCalculated = 0
+
+    const dateAndValueOnDay = arrayOfDates.forEach( (date) => {
+
+
+        // loop to calculate value as dates go on
+         if(transactions[index].effectiveDate === date && index < transactions.length()){
+            valueCalculated += transactions[index].value
+            index += 1
+        }else{
+            index += 1
+        }
+        
+       console.log(index)
+
+        return {effectiveDate: date.toString, value: valueCalculated}
+    })
+
+    return dateAndValueOnDay 
 }
+
+console.log(getDailyPortfolioValues())
