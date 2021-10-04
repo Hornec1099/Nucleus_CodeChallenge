@@ -19,24 +19,16 @@ const transactions = [
 
 function getDailyPortfolioValues() {
 
-    const arrayOfDates = prices.map((logOfPricesInfo) => {
-        return logOfPricesInfo.effectiveDate
+    // get dates for comparison
+    const arrayOfDates = prices.map((priceLog) => {
+        return priceLog.effectiveDate
     })
-
-    let index = 0
-    let valueCalculated = 0
-
-    for ( index = 0; index < transactions.length; index ++){
-        
-
-    }
     
-    console.log(dateAndValueOnDay)
 
-        
 
-    
+ 
 
 }
 
 console.log(getDailyPortfolioValues())
+
