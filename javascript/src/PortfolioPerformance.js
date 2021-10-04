@@ -19,14 +19,21 @@ const transactions = [
 
 function getDailyPortfolioValues() {
 
-    // get dates for comparison
+    // get dates from Prices
     const arrayOfDates = prices.map((priceLog) => {
         return priceLog.effectiveDate
     })
+    // change date format to required
+    const newObjectArray = arrayOfDates.map((date) => {
+        let newDate = date.toISOString().substring(0,10)
+        return {effectiveDate : `${newDate}`,
+                value: 1}
+    })
+
     
 
-
- 
+    
+    return [newObjectArray]
 
 }
 
