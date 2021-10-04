@@ -26,23 +26,17 @@ function getDailyPortfolioValues() {
     let index = 0
     let valueCalculated = 0
 
-    const dateAndValueOnDay = arrayOfDates.forEach( (date) => {
-
-
-        // loop to calculate value as dates go on
-         if(transactions[index].effectiveDate === date && index < transactions.length()){
-            valueCalculated += transactions[index].value
-            index += 1
-        }else{
-            index += 1
-        }
+    for ( index = 0; index < transactions.length; index ++){
         
-       console.log(transactions[index].effectiveDate)
 
-        return {effectiveDate: date.toString, value: valueCalculated}
-    })
+    }
+    
+    console.log(dateAndValueOnDay)
 
-    return dateAndValueOnDay 
+        
+
+    
+
 }
 
 console.log(getDailyPortfolioValues())
