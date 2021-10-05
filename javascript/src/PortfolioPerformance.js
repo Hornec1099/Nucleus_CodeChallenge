@@ -19,6 +19,8 @@ const datesForWeek = [
     { effectiveDate: new Date(2021, 8, 1, 5, 0, 0)},
     { effectiveDate: new Date(2021, 8, 2, 5, 0, 0)},
     { effectiveDate: new Date(2021, 8, 3, 5, 0, 0)},
+    { effectiveDate: new Date(2021, 8, 4, 5, 0, 0)},
+    { effectiveDate: new Date(2021, 8, 5, 5, 0, 0)},
     { effectiveDate: new Date(2021, 8, 6, 5, 0, 0)},
     { effectiveDate: new Date(2021, 8, 7, 5, 0, 0)},
 
@@ -59,7 +61,7 @@ const mostAppropriatePrice = (date) => {
             return true;}
     })
     
-    const price = reversedArrayOfPrices[priceIndex].price
+    const price = reversedArrayOfPrices[priceIndex]
     
     return price
 }
@@ -72,18 +74,20 @@ function getDailyPortfolioValues() {
     changeDate(prices)
     changeDate(datesForWeek)
 
-    let totalValue = 0
-    
+    let totalValue = 0;
+    let pricing = 0;
     //  get all data in one list
     const returnValues = datesForWeek.map((dateInfo) => {
         // tallies total value through the run
         totalValue += valueOfBitcoinForDay(dateInfo.effectiveDate)
         
         // returns Price for date
-       let pricing = mostAppropriatePrice(dateInfo.effectiveDate)
+       pricing = mostAppropriatePrice(dateInfo.effectiveDate)
+        
+       console.log(pricing)
 
         return {effectiveDate: dateInfo.effectiveDate,
-                value: totalValue * pricing}
+                value: totalValue}
     })
     
 
