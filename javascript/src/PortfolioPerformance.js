@@ -87,7 +87,8 @@ function getDailyPortfolioValues() {
        console.log(pricing)
 
         return {effectiveDate: dateInfo.effectiveDate,
-                value: totalValue}
+                value: totalValue,
+                price: pricing}
     })
     
 
