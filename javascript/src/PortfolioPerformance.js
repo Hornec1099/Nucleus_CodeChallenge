@@ -19,8 +19,6 @@ const datesForWeek = [
     { effectiveDate: new Date(2021, 8, 1, 5, 0, 0)},
     { effectiveDate: new Date(2021, 8, 2, 5, 0, 0)},
     { effectiveDate: new Date(2021, 8, 3, 5, 0, 0)},
-    { effectiveDate: new Date(2021, 8, 4, 5, 0, 0)},
-    { effectiveDate: new Date(2021, 8, 5, 5, 0, 0)},
     { effectiveDate: new Date(2021, 8, 6, 5, 0, 0)},
     { effectiveDate: new Date(2021, 8, 7, 5, 0, 0)},
 
@@ -35,7 +33,7 @@ const changeDate = (array)=>{
 
 
 // individually calculates value of bitcoin for that day given
- const valueForDay = (date) => {
+ const valueOfBitcoinForDay = (date) => {
         // gets all values from transaction for a specific day
          const valueList = transactions.map((logs)=> {
             if( logs.effectiveDate === date){ return logs.value}
@@ -51,7 +49,22 @@ const changeDate = (array)=>{
          return total
     }
 
+const mostAppropriatePrice = (date) => {
+    // copy and reverse array 
+    const reversedArrayOfPrices = prices.slice(0).reverse();
     
+    // find object with pricing against appropriate date
+    let priceIndex = reversedArrayOfPrices.findIndex((element) => { 
+        if(element.effectiveDate === date){
+            return true;}
+    })
+    
+    const price = reversedArrayOfPrices[priceIndex].price
+    
+    return price
+}
+
+
 
 function getDailyPortfolioValues() {
     // changes all dates to same YYYY-MM-DD format
@@ -62,16 +75,19 @@ function getDailyPortfolioValues() {
     let totalValue = 0
     
     //  get all data in one list
-    const allDataList = datesForWeek.map((dateInfo) => {
+    const returnValues = datesForWeek.map((dateInfo) => {
         // tallies total value through the run
-        totalValue += valueForDay(dateInfo.effectiveDate)
+        totalValue += valueOfBitcoinForDay(dateInfo.effectiveDate)
         
+        // returns Price for date
+       let pricing = mostAppropriatePrice(dateInfo.effectiveDate)
+
         return {effectiveDate: dateInfo.effectiveDate,
-                value: totalValue}
+                value: totalValue * pricing}
     })
     
 
-    return allDataList
+    return returnValues
 
 }
 
