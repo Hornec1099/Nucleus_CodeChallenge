@@ -20,30 +20,33 @@ const changeDate = (array)=>{
         array[i].effectiveDate = array[i].effectiveDate.toISOString().substring(0,10)
     }}
 
-function getDailyPortfolioValues() {
 
-    changeDate(transactions)
-    changeDate(prices)
 
     const valueForDay = (date) => {
-
         // gets all values from transaction for a specific day
          const valueList = transactions.map((logs)=> {
             if( logs.effectiveDate === date){ return logs.value}
             else{return 0}
          })
-         console.log(valueList)
-         
-         const totalForDay = valueList.reduce((prevValue, nextValue) => {
-             prevValue + nextValue;
+       
+        //  calculate the total value earned in that day by adding all values together from previous array created
+         const total = valueList.reduce((prevValue, nextValue) => {
+             return prevValue + nextValue;
          },0)
-
-         console.log(`totalForDay : ${totalForDay}`)
-
-         return totalForDay
+         
+        //  returns value from this day specifically
+         return total
     }
 
-    valueForDay(transactions[0].effectiveDate)
+    
+
+function getDailyPortfolioValues() {
+
+    changeDate(transactions)
+    changeDate(prices)
+
+
+    console.log(valueForDay(transactions[3].effectiveDate))
 
     return []
 
