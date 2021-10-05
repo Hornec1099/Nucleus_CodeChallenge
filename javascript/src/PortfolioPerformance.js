@@ -14,6 +14,19 @@ const transactions = [
     { effectiveDate: new Date(2021, 8, 5, 9, 0, 0), value: -0.01 },
     { effectiveDate: new Date(2021, 8, 7, 9, 0, 0), value: 0.1 },
 ];
+
+const datesForWeek = [
+    { effectiveDate: new Date(2021, 8, 1, 5, 0, 0)},
+    { effectiveDate: new Date(2021, 8, 2, 5, 0, 0)},
+    { effectiveDate: new Date(2021, 8, 3, 5, 0, 0)},
+    { effectiveDate: new Date(2021, 8, 4, 5, 0, 0)},
+    { effectiveDate: new Date(2021, 8, 5, 5, 0, 0)},
+    { effectiveDate: new Date(2021, 8, 6, 5, 0, 0)},
+    { effectiveDate: new Date(2021, 8, 7, 5, 0, 0)},
+
+]
+
+
 // change date format so easier for comparison 
 const changeDate = (array)=>{
     for(let i = 0; i < array.length; i++){
@@ -21,8 +34,8 @@ const changeDate = (array)=>{
     }}
 
 
-
-    const valueForDay = (date) => {
+// individually calculates value of bitcoin for that day given
+ const valueForDay = (date) => {
         // gets all values from transaction for a specific day
          const valueList = transactions.map((logs)=> {
             if( logs.effectiveDate === date){ return logs.value}
@@ -33,7 +46,7 @@ const changeDate = (array)=>{
          const total = valueList.reduce((prevValue, nextValue) => {
              return prevValue + nextValue;
          },0)
-         
+
         //  returns value from this day specifically
          return total
     }
@@ -41,14 +54,24 @@ const changeDate = (array)=>{
     
 
 function getDailyPortfolioValues() {
-
+    // changes all dates to same YYYY-MM-DD format
     changeDate(transactions)
     changeDate(prices)
+    changeDate(datesForWeek)
 
+    let totalValue = 0
+    
+    //  get all data in one list
+    const allDataList = datesForWeek.map((dateInfo) => {
+        // tallies total value through the run
+        totalValue += valueForDay(dateInfo.effectiveDate)
+        
+        return {effectiveDate: dateInfo.effectiveDate,
+                value: totalValue}
+    })
+    
 
-    console.log(valueForDay(transactions[3].effectiveDate))
-
-    return []
+    return allDataList
 
 }
 
