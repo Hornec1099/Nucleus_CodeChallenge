@@ -56,14 +56,20 @@ const mostAppropriatePrice = (date) => {
     const reversedArrayOfPrices = prices.slice(0).reverse();
     
     // find object with pricing against appropriate date
-    let priceIndex = reversedArrayOfPrices.findIndex((element) => { 
+    const price = reversedArrayOfPrices.map((element) => { 
         if(element.effectiveDate === date){
-            return true;}
+            return element.price;}
+
+        else{
+            return 0
+        }
+    })
+
+    const recentPrice = price.find((element)=>{
+        return element > 0 
     })
     
-    const price = reversedArrayOfPrices[priceIndex]
-    
-    return price
+    return recentPrice
 }
 
 
@@ -81,15 +87,13 @@ function getDailyPortfolioValues() {
         // tallies total value through the run
         totalValue += valueOfBitcoinForDay(dateInfo.effectiveDate)
         
-        // returns Price for date
+        // returns Price for date but only if date has a price
        pricing = mostAppropriatePrice(dateInfo.effectiveDate)
         
-       console.log(pricing)
+       
 
         return {effectiveDate: dateInfo.effectiveDate,
-                value: totalValue,
-                price: pricing}
-    })
+                value: totalValue * pricing}})
     
 
     return returnValues
